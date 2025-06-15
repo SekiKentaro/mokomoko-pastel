@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { useThree, useLoader, useFrame } from '@react-three/fiber'; // useLoader を追加
 import { EXRLoader } from 'three-stdlib';                            // EXRLoader を追加
-import { PMREMGenerator, LinearToneMapping, sRGBEncoding } from 'three';
+import { LinearToneMapping, SRGBColorSpace } from 'three';
 import { useGLTF } from '@react-three/drei';
 
 const MODEL_PATH = 'model.glb';       // public/model.glb が存在すること
@@ -24,7 +24,7 @@ export default function Scene({ activeCamera, modelRotY = 0 }) {
   // --- 初回マウント時処理 ---
   useEffect(() => {
     gl.toneMapping    = LinearToneMapping;
-    gl.outputEncoding = sRGBEncoding;
+    gl.outputColorSpace = SRGBColorSpace;
     gl.toneMappingExposure = 1.5;
   }, [gl, scene]);
 
