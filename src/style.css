@@ -1,0 +1,427 @@
+body {
+  font-family: 'Yusei Magic', sans-serif;
+}
+
+/* --- Canvas 全画面 --- */
+.canvas-container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: 0;
+}
+
+/* --- セクション共通 --- */
+.section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  /* overflow: hidden; 削除して内部スクロールを許可 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+/* --- セクションタイトル（上部中央） --- */
+.section-title {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: #333;
+  z-index: 1;
+}
+
+/* --- 右側ダミーテキスト --- */
+.section-dummy {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 25%;
+  background: rgba(255,255,255,0.8);
+  color: #333;
+  padding: 1rem;
+  animation: fadeInUp 0.8s ease-out;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── ストーリーセクション ─── */
+/* 既存の Story セクション周辺スタイル */
+.story-content-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.story-text-wrapper {
+  position: absolute;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  max-width: 50%;
+  background: rgba(255,255,255,0.8);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.story-heading {
+  margin: 0 0 1rem 0;
+  font-size: 3rem;
+  color: #333;
+}
+
+.story-body {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* ---------- プロフィールセクション 用スタイル ---------- */
+
+/* 親コンテナ：画面全体をカバーし、position: relative で円形配置を行う */
+.profile-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* セクション全体の高さ */
+}
+
+/* 丸パネルの共通スタイル */
+.circle-panel {
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column; /* タイトル＋内容を縦に並べる */
+  align-items: center;
+  justify-content: center;
+  color: #333333;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transform-origin: center; /* ここを追加 */
+}
+
+/* タイトル */
+.circle-panel .panel-title {
+  color: #333333;
+  font-weight: bold;
+  text-align: center;
+  font-size: 2rem;
+  /* 初期サイズは 14px、animate で変更 */
+}
+
+/* 内容 */
+.circle-panel .panel-content {
+  margin: 30px 50px 50px 50px;
+  padding: 0 8px;
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+/* p と br の余白調整 */
+.circle-panel .panel-content p {
+  margin: 0;
+  color: #333333; /* 背景が半透明なので文字を見やすく */
+}
+
+/* ─── コンテンツセクション ─── */
+.content-section-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ① video-grid を右側に絶対配置 */
+.video-grid {
+  position: absolute;
+  right: 2rem;           /* 画面右端から少し余白 */
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 40%;            /* 横幅を 40% に（必要に応じて調整） */
+}
+
+/* ─── パネル（カード） ─── */
+.video-thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #333;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transform-style: preserve-3d;  /* 横回転のために必須 */
+  backface-visibility: hidden;   /* 裏面を隠す */
+}
+
+/* ─── モーダルオーバーレイ ─── */
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* ─── モーダルコンテンツ ─── */
+.video-modal {
+  position: relative;
+  background: #000;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 800px;
+  max-height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* 閉じるボタン */
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+
+/* 動画本体 */
+.modal-video {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}
+
+
+/* --- ハンバーガーメニュー等（省略） --- */
+/* （以前の .header, .nav, .logo, .hamburger のまま） */
+
+/* --- TOPに戻るボタン --- */
+.return-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 100px;
+  /* height: 50px; */
+  cursor: pointer;
+  z-index: 5;
+  transition: transform 0.2s ease;
+}
+.return-button:hover {
+  transform: translateY(-5px);
+}
+
+/* ヘッダー共通 */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 100;
+  box-sizing: border-box;
+  transition: background 0.3s;
+  overflow: visible;
+}
+
+.header .nav-link{
+  cursor:pointer;
+  font-size: 1.5rem;
+}
+
+/* フルヘッダー時の背景 */
+.header.full {
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+}
+
+/* ミニヘッダー時は背景も帯も完全に透明 */
+.header.minimal {
+  background: none !important;
+  backdrop-filter: none !important;
+}
+
+/* ロゴ */
+.header .logo {
+  height: 40px;
+  cursor: pointer;
+  transition: height 0.3s ease;
+}
+
+/* ファーストビュー時の大きいロゴ */
+.header .logo-large {
+  height: 120px;  /* 40px × 3 */
+  margin-top: 80px;    /* 上部に余白 */
+  margin-left: 20px;   /* 左側に余白 */
+}
+
+/* デスクトップ用フルナビ */
+.header .desktop-only {
+  display: flex;
+  gap: 1rem;
+}
+@media (max-width: 768px) {
+  .header .desktop-only { display: none; }
+}
+
+/* ハンバーガーアイコン */
+.header .hamburger {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* オーバーレイメニュー */
+.nav-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,0.8); /* 白の半透明 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  pointer-events: auto;
+}
+
+/* オーバーレイ内の閉じるボタン */
+.overlay-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+/* オーバーレイ内リンク */
+.overlay-link {
+  color: #333;
+  font-size: 2rem;
+  margin: 1rem 0;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.overlay-link:hover {
+  transform: scale(1.1);
+}
+
+/* メニューオープン中は下層を操作不可に */
+.sections-container.disabled {
+  pointer-events: none;
+}
+body {
+  /* open時に body のスクロールを止める useEffect で制御 */
+}
+
+/* ---------- リンクセクション ---------- */
+
+/* 親コンテナ：画面中央・縦方向は中断より少し上を維持 */
+.link-section-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;  /* 横中央 */
+  align-items: center;      /* 縦中央 */
+  transform: translateY(-20%); /* 中央から 20% 上へ */
+}
+
+/* 各アイテムを横並びにして、上下方向は要素をまとめた幅で配置 */
+.link-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 2rem;
+}
+
+/* カード全体 */
+.card-container {
+  width: 120px;    /* アイコン／QR の横幅 */
+  height: 120px;   /* アイコン／QR の高さ */
+  position: relative;
+  transform-style: preserve-3d; /* 3D回転を有効に */
+  cursor: pointer;
+}
+
+/* 前面・背面フェイスの共通 */
+.card-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* 裏面は見えない */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* front: そのまま */
+.card-front {
+  transform: rotateY(0deg);
+}
+
+/* back: 最初から 180deg 回転させておく */
+.card-back {
+  transform: rotateY(180deg);
+}
+
+/* 画像 */
+.card-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* アクセスボタン全体 */
+.access-button {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  border: 2px solid #000;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+  min-width:120px;
+  display: inline-flex;
+  align-items: center;       /* 縦方向中央揃え */
+  justify-content: center;   /* 横方向中央揃え */
+  gap: 0.4rem;               /* テキストとアイコンの間隔 */
+}
+
+/* ホバー時の色変化（任意） */
+.access-button:hover {
+  background-color: #f0f0f0;
+}
+
+/* ボタン内のテキスト */
+.access-button .button-text {
+  line-height: 1;                /* 高さを揃えて縦位置がズレないように */
+  display:block;
+  position: center;
+}
+
+/* ボタン内のアイコン */
+.access-button .button-icon {
+  width: 16px;                   /* アイコンサイズ。必要に応じて調整 */
+  height: 16px;
+  object-fit: contain;
+}
