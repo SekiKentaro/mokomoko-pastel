@@ -8,9 +8,10 @@ import { useGLTF } from '@react-three/drei';
 
 const MODEL_PATH = 'model.glb';       // public/model.glb が存在すること
 
-export default function Scene({ activeCamera }) {
+export default function Scene({ activeCamera, modelRotY = 0 }) {
   const { camera, scene, gl, size } = useThree();
   const mixer = useRef();
+  const modelRef = useRef();
   const camerasMap = useRef({});
 
   // (2) カメラターゲット用
@@ -34,6 +35,7 @@ export default function Scene({ activeCamera }) {
 
     // -- モデルをシーンに追加 --
     scene.add(gltf.scene);
+    modelRef.current = gltf.scene;
 
     // -- アニメーション準備 --
     mixer.current = new THREE.AnimationMixer(gltf.scene);
@@ -94,6 +96,10 @@ export default function Scene({ activeCamera }) {
   // 毎フレーム：アニメーション更新・カメラ補間・レンダー
   useFrame((_, delta) => {
     mixer.current?.update(delta);
+
+    if (modelRef.current) {
+      modelRef.current.rotation.y = modelRotY;
+    }
 
     camera.aspect = size.width / size.height;
     camera.updateProjectionMatrix();
