@@ -6,7 +6,7 @@ import { EXRLoader } from 'three-stdlib';                            // EXRLoade
 import { PMREMGenerator, LinearToneMapping, sRGBEncoding } from 'three';
 import { useGLTF } from '@react-three/drei';
 
-const MODEL_PATH = '/model.glb';       // public/model.glb が存在すること
+const MODEL_PATH = `${import.meta.env.BASE_URL}model.glb`;       // public/model.glb が存在すること
 
 export default function Scene({ activeCamera }) {
   const { camera, scene, gl, size } = useThree();

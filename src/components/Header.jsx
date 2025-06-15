@@ -4,6 +4,8 @@ import { FaBars, FaTimes  } from 'react-icons/fa';  // FaTimes はオーバー�
 import { motion, AnimatePresence } from 'framer-motion';
 import { scrollToSection } from '../utils/scroll';
 
+const BASE = import.meta.env.BASE_URL;
+
 const links = [
 //   { id: 'first',   label: 'ファーストビュー' },
   { id: 'story',   label: 'ストーリー' },
@@ -46,12 +48,12 @@ export default function Header({ onSelect, isFirst, setMenuOpen }) {
         transition={{ duration: 0.4 }}
       >
         {/* 左：ロゴ */}
-        <img
-          src="../img/logo.png"
-          alt="logo"
-          className={`logo ${isFirst ? 'logo-large' : ''}`}
-          onClick={() => handleNavClick('first')}
-        />
+          <img
+            src={`${BASE}img/logo.png`}
+            alt="logo"
+            className={`logo ${isFirst ? 'logo-large' : ''}`}
+            onClick={() => handleNavClick('first')}
+          />
 
         {/* デスクトップのフルナビ（ファーストビュー時のみ） */}
         {isFirst && (
