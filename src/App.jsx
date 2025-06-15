@@ -64,10 +64,9 @@ export default function App() {
     setModelRotY(dragging.current.startRot + delta * 0.005);
   }, []);
 
-  const endDrag = useCallback(() => {
-    dragging.current.active = false;
-
-  }, []);
+  //const endDrag = useCallback(() => {
+  //  dragging.current.active = false;
+  //}, []);
 
   // idx が変わったらスクロール＆カメラを移動
   useEffect(() => {
