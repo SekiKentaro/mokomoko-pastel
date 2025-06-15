@@ -4,5 +4,8 @@ import react from '@vitejs/plugin-react';
 // Vite に React プラグインを読み込ませるだけの設定
 export default defineConfig({
   base: '/mokomoko-pastel/',
-  plugins: [react()]
+  plugins: [react()],
+  resolve: {
+    dedupe: ['three']
+  }
 });

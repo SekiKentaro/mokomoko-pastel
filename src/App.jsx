@@ -7,6 +7,8 @@ import sectionsConfig from './config/sectionsConfig';
 import Scene from './components/Scene';
 import { scrollToSection } from './utils/scroll';
 
+const BASE = import.meta.env.BASE_URL;
+
 // 各セクションの設定（dummy テキストは改行 "\n" で可変）
 const sections = [
   { id: 'first',   camera: 'camera1', title: 'ファーストビュー', dummy: 'ここはファーストビュー用のテキストです。' },
@@ -89,12 +91,12 @@ export default function App() {
       </div>
 
       {/* TOPに戻るボタン */}
-      <img
-        src="/img/return.png"
-        alt="return"
-        className="return-button"
-        onClick={() => setIdx(0)}
-      />
+        <img
+          src={`${BASE}img/return.png`}
+          alt="return"
+          className="return-button"
+          onClick={() => setIdx(0)}
+        />
     </>
   );
 }

@@ -2,32 +2,34 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
+const BASE = import.meta.env.BASE_URL;
+
 export default function LinkSection() {
   // ★ アイコン・URL・QRパス・ボタンテキストを配列で管理
   const links = [
     {
-      icon: '/img/icons/x_icon.png',
+      icon: `${BASE}img/icons/x_icon.png`,
       url: 'https://github.com/your-username',
-      qr: '/img/icons/x_qr.png',
+      qr: `${BASE}img/icons/x_qr.png`,
       alt: 'X',
       buttonText: 'X',
-      buttonIcon: '/img/icons/link_icon.png',
+      buttonIcon: `${BASE}img/icons/link_icon.png`,
     },
     {
-      icon: '/img/icons/instagram_icon.png',
+      icon: `${BASE}img/icons/instagram_icon.png`,
       url: 'https://twitter.com/your-username',
-      qr: '/img/icons/instagram_qr.png',
+      qr: `${BASE}img/icons/instagram_qr.png`,
       alt: 'Instagram',
       buttonText: 'Instagram',
-      buttonIcon: '/img/icons/link_icon.png',
+      buttonIcon: `${BASE}img/icons/link_icon.png`,
     },
     {
-      icon: '/img/icons/line_stamp.png',
+      icon: `${BASE}img/icons/line_stamp.png`,
       url: 'https://www.linkedin.com/in/your-username',
-      qr: '/img/icons/stamp_qr.png',
+      qr: `${BASE}img/icons/stamp_qr.png`,
       alt: 'LINEスタンプ',
       buttonText: 'LINEスタンプ',
-      buttonIcon: '/img/icons/link_icon.png',
+      buttonIcon: `${BASE}img/icons/link_icon.png`,
     },
   ];
 
