@@ -20,6 +20,8 @@ const sections = [
 export default function App() {
   const [idx, setIdx] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [modelRotY, setModelRotY] = useState(0);
+  const dragging = useRef({ active: false, startX: 0, startRot: 0 });
   const scrolling = useRef(false);
 
   // マウスホイールで idx を変更
@@ -34,9 +36,31 @@ export default function App() {
     }
   }, [idx]);
 
+  // ドラッグ操作でモデルを回転
+  const onPointerDown = useCallback(e => {
+    if (idx !== 0) return;
+    const ev = e.clientX !== undefined ? e : e.event;
+    dragging.current = { active: true, startX: ev.clientX, startRot: modelRotY };
+    ev.target.setPointerCapture?.(ev.pointerId);
+  }, [idx, modelRotY]);
+
+  const onPointerMove = useCallback(e => {
+    if (!dragging.current.active) return;
+    const ev = e.clientX !== undefined ? e : e.event;
+    const delta = ev.clientX - dragging.current.startX;
+    setModelRotY(dragging.current.startRot + delta * 0.005);
+  }, []);
+
+  const endDrag = useCallback(e => {
+    dragging.current.active = false;
+    const ev = e?.clientX !== undefined ? e : e?.event;
+    ev?.target.releasePointerCapture?.(ev.pointerId);
+  }, []);
+
   // idx が変わったらスクロール＆カメラを移動
   useEffect(() => {
     scrollToSection(sections[idx].id);
+    if (idx !== 0) setModelRotY(0);
     const t = setTimeout(() => scrolling.current = false, 1000);
     return () => clearTimeout(t);
   }, [idx]);
@@ -53,13 +77,20 @@ export default function App() {
       {/* 3D Canvas */}
       <div className="canvas-container">
         <Canvas
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerLeave={endDrag}
           // ← here we explicitly set the same lens you had before:
           camera={{ fov: 38.6, near: 0.1, far: 1000 }}
         >
           <ambientLight intensity={0.3} />
           <directionalLight intensity={0.5} position={[25, 40,50]} />
           <Suspense fallback={null}>
-            <Scene activeCamera={sectionsConfig[idx].camera} />
+            <Scene
+              activeCamera={sectionsConfig[idx].camera}
+              modelRotY={modelRotY}
+            />
           </Suspense>
         </Canvas>
       </div>
