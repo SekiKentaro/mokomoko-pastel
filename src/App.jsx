@@ -42,10 +42,14 @@ export default function App() {
     const ev = e.clientX !== undefined ? e : e.event;
     dragging.current = { active: true, startX: ev.clientX, startRot: modelRotY };
     ev.target.setPointerCapture?.(ev.pointerId);
+
+    dragging.current = { active: true, startX: e.clientX, startRot: modelRotY };
+
   }, [idx, modelRotY]);
 
   const onPointerMove = useCallback(e => {
     if (!dragging.current.active) return;
+
     const ev = e.clientX !== undefined ? e : e.event;
     const delta = ev.clientX - dragging.current.startX;
     setModelRotY(dragging.current.startRot + delta * 0.005);
@@ -55,6 +59,14 @@ export default function App() {
     dragging.current.active = false;
     const ev = e?.clientX !== undefined ? e : e?.event;
     ev?.target.releasePointerCapture?.(ev.pointerId);
+
+    const delta = e.clientX - dragging.current.startX;
+    setModelRotY(dragging.current.startRot + delta * 0.005);
+  }, []);
+
+  const endDrag = useCallback(() => {
+    dragging.current.active = false;
+
   }, []);
 
   // idx が変わったらスクロール＆カメラを移動
@@ -75,7 +87,13 @@ export default function App() {
       />
 
       {/* 3D Canvas */}
-      <div className="canvas-container">
+      <div
+        className="canvas-container"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerLeave={endDrag}
+      >
         <Canvas
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
