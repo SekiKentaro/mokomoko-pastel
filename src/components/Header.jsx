@@ -47,7 +47,7 @@ export default function Header({ onSelect, isFirst, setMenuOpen }) {
       >
         {/* 左：ロゴ */}
         <img
-          src="./mokomoko-pastel/img/logo.png"
+          src="../img/logo.png"
           alt="logo"
           className={`logo ${isFirst ? 'logo-large' : ''}`}
           onClick={() => handleNavClick('first')}
