@@ -7,7 +7,6 @@ import sectionsConfig from './config/sectionsConfig';
 import Scene from './components/Scene';
 import { scrollToSection } from './utils/scroll';
 
-const BASE = import.meta.env.BASE_URL;
 
 // 各セクションの設定（dummy テキストは改行 "\n" で可変）
 const sections = [
@@ -92,7 +91,7 @@ export default function App() {
 
       {/* TOPに戻るボタン */}
         <img
-          src={`${BASE}img/return.png`}
+          src="img/return.png"
           alt="return"
           className="return-button"
           onClick={() => setIdx(0)}
